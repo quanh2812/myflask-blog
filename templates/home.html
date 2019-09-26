@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block mainbar %}
+{% for post in post %}
+<div class="article">
+    <h2><span>{{ post.title }}</span></h2>
+    <p class="infopost">Posted <span class="date">{{ post.date_posted }}</span> by <a href="#">{{ post.author }}</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        Filed under <a href="#">templates</a>, <a href="#">internet</a> &nbsp;&nbsp; <a href="#" class="com">Comments
+            <span>11</span></a></p>
+
+    <div class="clr"></div>
+    <div class="img"><img src="static/images/img1.jpg" width="198" height="208" alt="" class="fl"/></div>
+    <div class="post_content">
+        {{ post.content }}
+        <p class="spec"><a href="#" class="rm">Read more</a></p>
+    </div>
+    <div class="clr"></div>
+</div>
+<p class="pages"><small>Page 1 of 2</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
+{% endfor %}
+{% endblock %}
