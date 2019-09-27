@@ -12,10 +12,10 @@
     <div class="img"><img src="static/images/img1.jpg" width="198" height="208" alt="" class="fl"/></div>
     <div class="post_content">
         {{ post.content }}
-        <p class="spec"><a href="#" class="rm">Read more</a></p>
+        <p class="spec"><a href="{{ url_for('post_detail', id=post.id) }}" class="rm">Read more</a></p>
     </div>
     <div class="clr"></div>
 </div>
-<p class="pages"><small>Page 1 of 2</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
 {% endfor %}
+<p class="pages"><small>Page 1 of 2</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
 {% endblock %}

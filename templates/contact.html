@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block mainbar %}
+    <div class="article">
+        <h2><span>Contact</span></h2>
+        <div class="clr"></div>
+        <p>Day la phan dang ki tai khoan de upload cac bai viet len blog</p>
+    </div>
+    <div class="article">
+        <h2><span>Register Form</span></h2>
+        <div class="clr"></div>
+        <form method="POST" action="#">
+            <ol>
+                <li>
+                    <label>Name **</label>
+                    <input id="name" type="text" class="text"/>
+                </li>
+                <li>
+                    <label>Email Address **</label>
+                    <input id="email" name="email" class="text"/>
+                </li>
+                <li>
+                	<label>Contact us</label>
+                	<textarea id="message" name="message" rows="8" cols="50"></textarea>
+                </li>
+                <li>
+                	<input class="btn btn-outline-info" id="submit" name="submit" type="submit" value="Sign Up">
+                    <div class="clr"></div>
+                </li>
+            </ol>
+        </form>
+    </div>
+{% endblock %}

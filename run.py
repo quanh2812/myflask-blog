@@ -1,35 +1,44 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+import odoorpc
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://quocanh:123@localhost/flask-blog'
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
+# Prepare the connection to the server
+odoo = odoorpc.ODOO('localhost', port=8069)
 
-post = [
-    {
-        'author': 'Admin',
-        'title': 'This is the first content',
-        'content': 'Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna. In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo.',
-        'date_posted': '11 sep 2018 by ',
-    }
-]
+# Check available databases
+print(odoo.db.list())
 
-class Post(db.Model):
-    id = db.Column(db.Interger, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    author = db.Column(db.String(50), nullable=False)
-    date_posted = db.Column()
+# Login
+odoo.login('flask-blog', 'admin', 'admin')
+
 
 @app.route("/")
 @app.route("/home")
 def home():
+    posts = odoo.env['post'].search([])
+    posts.sort(reverse=True)
+    post = odoo.execute('post', 'read', posts)
     return render_template('home.html', post=post)
+
+
+@app.route("/detail/<int:id>")
+def post_detail(id):
+    post = odoo.env['post'].browse(id)
+    return render_template('detail.html', post=post)
 
 
 @app.route("/about")
 def about():
     return render_template('about.html')
+
+
+@app.route("/contact")
+def contact():
+    return render_template('contact.html')
 
 
 if __name__ == '__main__':
